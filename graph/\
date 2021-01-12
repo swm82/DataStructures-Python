@@ -1,0 +1,59 @@
+class Vertex:
+    def __init__(self, key):
+        self.key = key
+        self.adj_list = {}
+
+    def add_adj(self, v, weight):
+        self.adj_list[v] = weight
+
+    def __str__(self):
+        return f'{str(self.key)} - Adjacencies: {str([x[key] for x in self.adj_list])}'
+
+
+class Graph:
+    def __init__(self, undirected=False):
+        # List of vertices
+        self.vert_list = {}
+        self.num_vert = 0
+        self.undirected = undirected
+
+    def add_vertex(self, key):
+        new_vertex = Vertex(key)
+        self.vert_list[key] = new_vertex
+        self.num_vert += 1
+        return new_vertex
+
+    def get_vertex(self, u):
+        return self.vert_list.get(u, None)
+
+    def add_edge(u, v, weight=0):
+        # adds vertices if not in graph.  Weight as kwarg has def. value
+        if u not in self.vert_list:
+            self.add_vertex(u)
+        if v not in self.vert_list:
+            self.add_vertex(v)
+        self.vert_list[u].add_adj(self.vert_list[v], weight)
+        if self.undirected:
+            self.ver_list[v].add_adj(self.vert_list[u], weight)
+
+    def __contains__(self, n):
+        return n in self.vert_list
+
+    def __iter__(self):
+        return iter(self.vert_list.values())
+
+
+    if __name__ == '__main__':
+        g = Graph()
+        for i in range(10):
+            g.add_vertex(i)
+
+        g.add_edge(0,1,5)
+        g.add_edge(0,5,2)
+        g.add_edge(1,2,4)
+        g.add_edge(2,3,9)
+        g.add_edge(3,4,7)
+        g.add_edge(3,5,3)
+        g.add_edge(4,0,1)
+        g.add_edge(5,4,8)
+        g.add_edge(5,2,1):
